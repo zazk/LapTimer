@@ -2,9 +2,12 @@ const puppeteer = require("puppeteer");
 require("dotenv").config();
 (async () => {
   // WIP Replace these ones by parameters
-  const DAY = "17/04/2019";
-  const TICKET = "AI-786";
-  const TASKS = Array(9).fill(DAY);
+
+  const TASKS = Array();
+  const DAYS = ["23/04/2019"];
+  DAYS.map(day => TASKS.push(...Array(5).fill(day)));
+  const TICKET = "AI-801";
+  // const TASKS = Array(9).fill(DAY);
   // ====================================
 
   const browser = await puppeteer.launch({ headless: false });
@@ -28,17 +31,21 @@ require("dotenv").config();
       await page.goto(
         "https://timetracker.bairesdev.com/CargaTimeTracker.aspx"
       );
-      await page.evaluate(async (day,TICKET) => {
-        $("#ctl00_ContentPlaceHolder_idProyectoDropDownList")
-          .val("508")
-          .trigger("change");
-        $("#ctl00_ContentPlaceHolder_txtFrom").val(day);
-        $("#ctl00_ContentPlaceHolder_TiempoTextBox").val("1");
+      await page.evaluate(
+        async (day, TICKET) => {
+          $("#ctl00_ContentPlaceHolder_idProyectoDropDownList")
+            .val("508")
+            .trigger("change");
+          $("#ctl00_ContentPlaceHolder_txtFrom").val(day);
+          $("#ctl00_ContentPlaceHolder_TiempoTextBox").val("1");
 
-        $("#ctl00_ContentPlaceHolder_DescripcionTextBox").val(
-          `${TICKET} ${"\n".repeat(Math.random(5) * 10)}`
-        );
-      },item,TICKET);
+          $("#ctl00_ContentPlaceHolder_DescripcionTextBox").val(
+            `${TICKET} ${"\n".repeat(Math.random(5) * 10)}`
+          );
+        },
+        item,
+        TICKET
+      );
       await page.waitFor(1000);
       await page.evaluate(async () => {
         $("#ctl00_ContentPlaceHolder_idTipoAsignacionDropDownList")
@@ -54,6 +61,6 @@ require("dotenv").config();
     console.log("Done!");
   })(TASKS);
 
-  await page.waitFor(30000);
+  await page.waitFor(50000);
   await browser.close();
 })();
