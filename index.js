@@ -4,13 +4,13 @@ require("dotenv").config();
   // WIP Replace these ones by parameters
 
   const TASKS = Array();
-  const DAYS = ["23/04/2019"];
-  DAYS.map(day => TASKS.push(...Array(5).fill(day)));
-  const TICKET = "AI-801";
+  const DAYS = ["26/04/2019"];
+  DAYS.map(day => TASKS.push(...Array(4).fill(day)));
+  const TICKET = "AI-903";
   // const TASKS = Array(9).fill(DAY);
   // ====================================
 
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto("https://timetracker.bairesdev.com/");
 
@@ -25,7 +25,7 @@ require("dotenv").config();
   page.click("#ctl00_ContentPlaceHolder_LoginButton");
 
   await page.waitForNavigation();
-  (async (items = Array(9)) => {
+  await (async (items = Array(9)) => {
     for (const item of items) {
       console.log(item, "log");
       await page.goto(
@@ -60,7 +60,5 @@ require("dotenv").config();
     }
     console.log("Done!");
   })(TASKS);
-
-  await page.waitFor(50000);
   await browser.close();
 })();
