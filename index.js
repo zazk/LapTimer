@@ -4,9 +4,9 @@ require("dotenv").config();
   // WIP Replace these ones by parameters
 
   const TASKS = Array();
-  const DAYS = ["26/04/2019"];
-  DAYS.map(day => TASKS.push(...Array(4).fill(day)));
-  const TICKET = "AI-903";
+  const DAYS = ["28/05/2019"];
+  DAYS.map(day => TASKS.push(...Array(9).fill(day)));
+  const TICKET = "AI-1202";
   // const TASKS = Array(9).fill(DAY);
   // ====================================
 
